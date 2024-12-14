@@ -18,12 +18,14 @@ export const PriceChart = () => {
     queryKey: ['tomorrowsPrices'],
     queryFn: getTomorrowsPrices,
     retry: 3,
-    onError: () => {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Could not fetch tomorrow's prices. They might not be available yet.",
-      });
+    meta: {
+      onError: () => {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Could not fetch tomorrow's prices. They might not be available yet.",
+        });
+      }
     }
   });
 
