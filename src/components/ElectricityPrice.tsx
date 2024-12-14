@@ -39,13 +39,16 @@ export const ElectricityPrice = () => {
     );
   }
 
+  // Convert from öre/kWh to kr/kWh
+  const priceInKrPerKwh = (price / 100).toFixed(2);
+
   return (
     <div className="animate-fade-in">
       <div className="text-primary text-7xl md:text-9xl font-bold tracking-tight">
-        {price.toFixed(2)}
+        {priceInKrPerKwh}
       </div>
       <div className="text-secondary text-2xl md:text-3xl mt-4">
-        öre/kWh
+        kr/kWh
       </div>
     </div>
   );

@@ -14,5 +14,5 @@ export const getCurrentPrice = async () => {
   const prices = await response.json();
   const currentHour = now.getHours();
   
-  return prices[currentHour]?.SEK_per_kWh * 100 || null; // Convert to öre
+  return prices[currentHour]?.SEK_per_kWh * 100 || null; // Keep returning öre value for conversion in component
 };
