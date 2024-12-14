@@ -34,7 +34,7 @@ export const ElectricityPrice = () => {
     );
   }
 
-  if (error || price === null) {
+  if (error || !price) {
     return (
       <div>
         <h2 className="text-primary text-3xl md:text-4xl mb-4">Elpris just nu:</h2>
@@ -46,7 +46,7 @@ export const ElectricityPrice = () => {
   }
 
   // Convert from öre to kr with 2 decimal places
-  const formattedPrice = (price / 100).toFixed(2);
+  const formattedPrice = typeof price === 'number' ? (price / 100).toFixed(2) : 'N/A';
 
   return (
     <div className="animate-fade-in">

@@ -18,6 +18,13 @@ export const PriceChart = () => {
     queryKey: ['tomorrowsPrices'],
     queryFn: getTomorrowsPrices,
     retry: 3,
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Could not fetch tomorrow's prices. They might not be available yet.",
+      });
+    }
   });
 
   // Get tomorrow's date
@@ -33,6 +40,7 @@ export const PriceChart = () => {
   if (isLoading) {
     return (
       <div>
+        <div className="h-[200px]"></div>
         <h2 className="text-primary text-3xl md:text-4xl mb-4">
           Elpris imorgon {formattedDate}
         </h2>
@@ -43,19 +51,15 @@ export const PriceChart = () => {
     );
   }
 
-  if (error || !prices) {
-    toast({
-      variant: "destructive",
-      title: "Error",
-      description: "Could not fetch tomorrow's prices",
-    });
+  if (error || !prices || prices.length === 0) {
     return (
       <div>
+        <div className="h-[200px]"></div>
         <h2 className="text-primary text-3xl md:text-4xl mb-4">
           Elpris imorgon {formattedDate}
         </h2>
         <div className="h-[300px] flex items-center justify-center text-primary/50">
-          Could not load prices
+          Prices for tomorrow are not available yet
         </div>
       </div>
     );
