@@ -63,6 +63,7 @@ export const PriceChart = () => {
 
   return (
     <div>
+      <div className="h-[200px]"></div>
       <h2 className="text-primary text-3xl md:text-4xl mb-4">
         Elpris imorgon {formattedDate}
       </h2>
