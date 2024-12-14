@@ -25,16 +25,22 @@ export const ElectricityPrice = () => {
 
   if (isLoading) {
     return (
-      <div className="animate-fade-in text-primary text-6xl md:text-8xl font-bold opacity-50">
-        ...
+      <div>
+        <h2 className="text-primary text-3xl md:text-4xl mb-4">Elpris just nu:</h2>
+        <div className="animate-fade-in text-primary text-6xl md:text-8xl font-bold opacity-50">
+          ...
+        </div>
       </div>
     );
   }
 
   if (error || price === null) {
     return (
-      <div className="animate-fade-in text-primary text-4xl md:text-6xl font-bold opacity-50">
-        Price unavailable
+      <div>
+        <h2 className="text-primary text-3xl md:text-4xl mb-4">Elpris just nu:</h2>
+        <div className="animate-fade-in text-primary text-4xl md:text-6xl font-bold opacity-50">
+          Price unavailable
+        </div>
       </div>
     );
   }
@@ -44,6 +50,7 @@ export const ElectricityPrice = () => {
 
   return (
     <div className="animate-fade-in">
+      <h2 className="text-primary text-3xl md:text-4xl mb-4">Elpris just nu:</h2>
       <div className="text-primary text-7xl md:text-9xl font-bold tracking-tight">
         {priceInKrPerKwh}
       </div>
