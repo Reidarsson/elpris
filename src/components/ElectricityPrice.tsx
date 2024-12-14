@@ -45,10 +45,8 @@ export const ElectricityPrice = () => {
     );
   }
 
-  // Convert from öre to kr.öre format
-  const kronor = Math.floor(price / 100);
-  const ore = price % 100;
-  const formattedPrice = `${kronor}.${ore.toString().padStart(2, '0')}`;
+  // Convert from öre to kr with 2 decimal places
+  const formattedPrice = (price / 100).toFixed(2);
 
   return (
     <div className="animate-fade-in">
