@@ -45,14 +45,16 @@ export const ElectricityPrice = () => {
     );
   }
 
-  // Convert from öre/kWh to kr/kWh
-  const priceInKrPerKwh = (price / 100).toFixed(2);
+  // Convert from öre to kr.öre format
+  const kronor = Math.floor(price / 100);
+  const ore = price % 100;
+  const formattedPrice = `${kronor}.${ore.toString().padStart(2, '0')}`;
 
   return (
     <div className="animate-fade-in">
       <h2 className="text-primary text-3xl md:text-4xl mb-4">Elpris just nu:</h2>
       <div className="text-primary text-7xl md:text-9xl font-bold tracking-tight">
-        {priceInKrPerKwh}
+        {formattedPrice}
       </div>
       <div className="text-secondary text-2xl md:text-3xl mt-4">
         kr/kWh
