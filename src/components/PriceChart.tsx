@@ -30,17 +30,15 @@ export const PriceChart = () => {
     }
   });
 
-  const { data: tomorrowsPrices, isLoading: isTomorrowLoading, error: tomorrowPricesError } = useQuery({
+  const { data: tomorrowsPrices, isLoading: isTomorrowLoading } = useQuery({
     queryKey: ['tomorrowsPrices'],
     queryFn: getTomorrowsPrices,
-    retry: 3,
+    retry: false,
+    enabled: true,
     meta: {
       onError: () => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Morgondagens priser inte tillgängliga ännu (Normalt kl 13:00)",
-        });
+        // Silently handle the error without logging
+        // No toast or console log will be shown
       }
     }
   });
@@ -63,7 +61,7 @@ export const PriceChart = () => {
     return new Date().getHours();
   };
 
-  const renderChart = (prices: any[], isLoading: boolean, title: string, message: string, error?: Error | null) => {
+  const renderChart = (prices: any[], isLoading: boolean, title: string, message: string) => {
     if (isLoading) {
       return (
         <div className="w-full h-[300px] flex items-center justify-center text-primary/50 bg-[#1A1F2C] rounded-lg">
@@ -72,7 +70,7 @@ export const PriceChart = () => {
       );
     }
 
-    if (error || !prices || prices.length === 0) {
+    if (!prices || prices.length === 0) {
       return (
         <div className="w-full h-[300px] flex items-center justify-center text-primary/50 bg-[#1A1F2C] rounded-lg">
           {message}
@@ -145,8 +143,7 @@ export const PriceChart = () => {
         tomorrowsPrices,
         isTomorrowLoading,
         `Elpris imorgon ${formatDate(tomorrow)}`,
-        "Morgondagens priser inte tillgängliga ännu (Normalt kl 13:00)",
-        tomorrowPricesError
+        "Morgondagens priser inte tillgängliga ännu (Normalt kl 13:00)"
       )}
     </div>
   );
