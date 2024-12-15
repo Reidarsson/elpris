@@ -61,7 +61,7 @@ export const PriceChart = () => {
   const renderChart = (prices: any[], isLoading: boolean, title: string, message: string, error?: Error | null) => {
     if (isLoading) {
       return (
-        <div className="absolute inset-0 flex items-center justify-center text-primary/50 bg-[#1A1F2C]">
+        <div className="w-full h-[300px] flex items-center justify-center text-primary/50 bg-[#1A1F2C] rounded-lg">
           Loading prices...
         </div>
       );
@@ -69,18 +69,18 @@ export const PriceChart = () => {
 
     if (error || !prices || prices.length === 0) {
       return (
-        <div className="absolute inset-0 flex items-center justify-center text-primary/50 bg-[#1A1F2C]">
+        <div className="w-full h-[300px] flex items-center justify-center text-primary/50 bg-[#1A1F2C] rounded-lg">
           {message}
         </div>
       );
     }
 
     return (
-      <>
-        <h2 className="text-primary text-3xl md:text-4xl mb-4">
+      <div className="w-full bg-[#1A1F2C] p-4 rounded-lg">
+        <h2 className="text-primary text-2xl font-semibold mb-4">
           {title}
         </h2>
-        <div className="relative w-full h-[300px] mt-8 bg-[#1A1F2C]">
+        <div className="w-full h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={prices}>
               <CartesianGrid strokeDasharray="3 3" stroke="#2D3748" />
@@ -112,20 +112,18 @@ export const PriceChart = () => {
             </LineChart>
           </ResponsiveContainer>
         </div>
-      </>
+      </div>
     );
   };
 
   return (
-    <div className="w-full bg-[#1A1F2C]">
-      <div className="h-[50px]"></div>
+    <div className="w-full space-y-8 p-4">
       {renderChart(
         todaysPrices,
         isTodayLoading,
         `Elpris idag ${formatDate(today)}`,
         "Dagens priser är inte tillgängliga"
       )}
-      <div className="h-[50px]"></div>
       {renderChart(
         tomorrowsPrices,
         isTomorrowLoading,
