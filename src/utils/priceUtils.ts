@@ -17,6 +17,26 @@ export const getCurrentPrice = async () => {
   return prices[currentHour]?.SEK_per_kWh * 100 || null; // Keep returning öre value for conversion in component
 };
 
+export const getTodaysPrices = async () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  
+  const url = `https://www.elprisetjustnu.se/api/v1/prices/${year}/${month}-${day}_SE3.json`;
+  
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('Failed to fetch price data');
+  }
+  
+  const prices = await response.json();
+  return prices.map((price: { time_start: string; SEK_per_kWh: number }, index: number) => ({
+    hour: index,
+    price: price.SEK_per_kWh
+  }));
+};
+
 export const getTomorrowsPrices = async () => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
