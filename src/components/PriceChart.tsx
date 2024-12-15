@@ -42,7 +42,7 @@ export const PriceChart = () => {
   const renderChart = () => {
     if (!prices || prices.length === 0) {
       return (
-        <div className="absolute inset-0 flex items-center justify-center text-primary/50">
+        <div className="absolute inset-0 flex items-center justify-center text-primary/50 bg-[#1A1F2C]">
           Prices for tomorrow are not available yet
         </div>
       );
@@ -83,14 +83,14 @@ export const PriceChart = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#1A1F2C]">
       <div className="h-[200px]"></div>
       <h2 className="text-primary text-3xl md:text-4xl mb-4">
         Elpris imorgon {formattedDate}
       </h2>
-      <div className="relative w-full h-[300px] mt-8">
+      <div className="relative w-full h-[300px] mt-8 bg-[#1A1F2C]">
         {isLoading ? (
-          <div className="absolute inset-0 flex items-center justify-center text-primary/50">
+          <div className="absolute inset-0 flex items-center justify-center text-primary/50 bg-[#1A1F2C]">
             Loading prices...
           </div>
         ) : (
