@@ -1,16 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTomorrowsPrices, getTodaysPrices } from "@/utils/priceUtils";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  ReferenceLine
-} from "recharts";
+import { PriceChartDisplay } from "./PriceChartDisplay";
+import { PriceChartPlaceholder } from "./PriceChartPlaceholder";
 
 export const PriceChart = () => {
   const { toast } = useToast();
@@ -38,7 +30,6 @@ export const PriceChart = () => {
     meta: {
       onError: () => {
         // Silently handle the error without logging
-        // No toast or console log will be shown
       }
     }
   });
@@ -57,78 +48,16 @@ export const PriceChart = () => {
     });
   };
 
-  const getCurrentHour = () => {
-    return new Date().getHours();
-  };
-
-  const renderChart = (prices: any[], isLoading: boolean, title: string, message: string) => {
+  const renderChart = (prices: any[], isLoading: boolean, title: string, message: string, showCurrentTime: boolean = false) => {
     if (isLoading) {
-      return (
-        <div className="w-full h-[300px] flex items-center justify-center text-primary/50 bg-[#1A1F2C] rounded-lg">
-          Loading prices...
-        </div>
-      );
+      return <PriceChartPlaceholder message="Loading prices..." />;
     }
 
     if (!prices || prices.length === 0) {
-      return (
-        <div className="w-full h-[300px] flex items-center justify-center text-primary/50 bg-[#1A1F2C] rounded-lg">
-          {message}
-        </div>
-      );
+      return <PriceChartPlaceholder message={message} />;
     }
 
-    return (
-      <div className="w-full bg-[#1A1F2C] p-4 rounded-lg">
-        <h2 className="text-primary text-2xl font-semibold mb-4">
-          {title}
-        </h2>
-        <div className="w-full h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={prices}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2D3748" />
-              <XAxis
-                dataKey="hour"
-                stroke="#718096"
-                tickFormatter={(hour) => `${hour}:00`}
-              />
-              <YAxis
-                stroke="#718096"
-                tickFormatter={(price) => `${price.toFixed(2)} kr`}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#2D3748",
-                  border: "none",
-                  borderRadius: "0.5rem",
-                }}
-                formatter={(value: number) => [`${value.toFixed(2)} kr/kWh`, "Price"]}
-                labelFormatter={(hour) => `${hour}:00`}
-              />
-              <Line
-                type="monotone"
-                dataKey="price"
-                stroke="#805AD5"
-                strokeWidth={2}
-                dot={false}
-              />
-              {title.includes('idag') && (
-                <ReferenceLine
-                  x={getCurrentHour()}
-                  stroke="red"
-                  strokeWidth={2}
-                  label={{
-                    value: 'Nu',
-                    position: 'top',
-                    fill: 'red'
-                  }}
-                />
-              )}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-    );
+    return <PriceChartDisplay prices={prices} title={title} showCurrentTime={showCurrentTime} />;
   };
 
   return (
@@ -137,7 +66,8 @@ export const PriceChart = () => {
         todaysPrices,
         isTodayLoading,
         `Elpris idag ${formatDate(today)}`,
-        "Dagens priser är inte tillgängliga"
+        "Dagens priser är inte tillgängliga",
+        true
       )}
       {renderChart(
         tomorrowsPrices,
