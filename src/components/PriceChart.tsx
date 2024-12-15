@@ -8,7 +8,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
+  ReferenceLine
 } from "recharts";
 
 export const PriceChart = () => {
@@ -56,6 +57,10 @@ export const PriceChart = () => {
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  const getCurrentHour = () => {
+    return new Date().getHours();
   };
 
   const renderChart = (prices: any[], isLoading: boolean, title: string, message: string, error?: Error | null) => {
@@ -109,6 +114,18 @@ export const PriceChart = () => {
                 strokeWidth={2}
                 dot={false}
               />
+              {title.includes('idag') && (
+                <ReferenceLine
+                  x={getCurrentHour()}
+                  stroke="red"
+                  strokeWidth={2}
+                  label={{
+                    value: 'Nu',
+                    position: 'top',
+                    fill: 'red'
+                  }}
+                />
+              )}
             </LineChart>
           </ResponsiveContainer>
         </div>
