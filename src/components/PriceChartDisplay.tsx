@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
   ReferenceLine
 } from "recharts";
+import { useEffect, useState } from "react";
 
 interface PriceChartDisplayProps {
   prices: any[];
@@ -16,9 +17,22 @@ interface PriceChartDisplayProps {
 }
 
 export const PriceChartDisplay = ({ prices, title, showCurrentTime }: PriceChartDisplayProps) => {
-  const getCurrentHour = () => {
+  const [currentHour, setCurrentHour] = useState(getCurrentHour());
+
+  function getCurrentHour() {
     return new Date().getHours();
-  };
+  }
+
+  useEffect(() => {
+    if (!showCurrentTime) return;
+
+    // Update current hour every minute
+    const interval = setInterval(() => {
+      setCurrentHour(getCurrentHour());
+    }, 60000); // 60000ms = 1 minute
+
+    return () => clearInterval(interval);
+  }, [showCurrentTime]);
 
   return (
     <div className="w-full bg-[#1A1F2C] p-4 rounded-lg">
@@ -56,7 +70,7 @@ export const PriceChartDisplay = ({ prices, title, showCurrentTime }: PriceChart
             />
             {showCurrentTime && (
               <ReferenceLine
-                x={getCurrentHour()}
+                x={currentHour}
                 stroke="red"
                 strokeWidth={2}
                 label={{
