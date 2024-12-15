@@ -7,11 +7,11 @@ const Index = () => {
       <div className="text-center p-8 w-full max-w-4xl min-h-screen flex-grow">
         <ElectricityPrice />
         <PriceChart />
+        <div className="text-primary/50 mt-4">
+          App för sparsamma elnördar, 
+          Med hemlig väsning, Torbjörn
+        </div>
       </div>
-      <footer className="w-full bg-primary/10 text-primary/50 p-4 text-center">
-        App för sparsamma elnördar, 
-        Med hemlig väsning, Torbjörn
-      </footer>
     </div>
   );
 };
